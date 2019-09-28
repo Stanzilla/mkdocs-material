@@ -44,7 +44,7 @@
         <meta name="lang:{{ key }}" content="{{ lang.t(key) }}">
       {% endfor %}
       <link rel="shortcut icon" href="{{ config.theme.favicon | url }}">
-      <meta name="generator" content="mkdocs-{{ mkdocs_version }}, mkdocs-material-4.5.0">
+      <meta name="generator" content="mkdocs-{{ mkdocs_version }}, mkdocs-material-4.4.2">
     {% endblock %}
     {% block htmltitle %}
       {% if page and page.meta and page.meta.title %}
@@ -56,21 +56,19 @@
       {% endif %}
     {% endblock %}
     {% block styles %}
-      <link rel="stylesheet" href="{{ 'assets/stylesheets/application.ee2cda76.css' | url }}">
+      <link rel="stylesheet" href="{{ 'assets/stylesheets/app.css' | url }}">
       {% if palette.primary or palette.accent %}
-        <link rel="stylesheet" href="{{ 'assets/stylesheets/application-palette.5e1c7483.css' | url }}">
+        <link rel="stylesheet" href="{{ 'assets/stylesheets/app-palette.css' | url }}">
       {% endif %}
       {% if palette.primary %}
         {% import "partials/palette.html" as map %}
         {% set primary = map.primary(
           palette.primary | replace(" ", "-") | lower
         ) %}
-        <meta name="theme-color" content="#20232A">
+        <meta name="theme-color" content="{{ primary }}">
       {% endif %}
     {% endblock %}
-    {% block libs %}
-      <script src="{{ 'assets/javascripts/modernizr.830e312a.js' | url }}"></script>
-    {% endblock %}
+    {% block libs %}{% endblock %}
     {% block fonts %}
       {% if font != false %}
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -80,8 +78,6 @@
             }}&display=fallback">
         <style>body,input{font-family:"{{ font.text }}","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"{{ font.code }}","Courier New",Courier,monospace}</style>
       {% endif %}
-      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:300,400,400i,700&display=fallback">
     {% endblock %}
     <link rel="stylesheet" href="{{ 'assets/fonts/material-icons.css' | url }}">
     {% if config.extra.manifest %}
@@ -104,16 +100,15 @@
   {% else %}
     <body dir="{{ lang.t('direction') }}">
   {% endif %}
-    <script src="{{ 'assets/javascripts/manticore.dd87e961.js' | url }}"></script>
     <svg class="md-svg">
       <defs>
         {% set platform = config.extra.repo_icon or config.repo_url %}
         {% if "github" in platform %}
-          {% include "assets/images/icons/github.f0b8504a.svg" %}
+          {% include "assets/images/icons/github.svg" %}
         {% elif "gitlab" in platform %}
-          {% include "assets/images/icons/gitlab.6dd19c00.svg" %}
+          {% include "assets/images/icons/gitlab.svg" %}
         {% elif "bitbucket" in platform %}
-          {% include "assets/images/icons/bitbucket.1b09e088.svg" %}
+          {% include "assets/images/icons/bitbucket.svg" %}
         {% endif %}
       </defs>
     </svg>
@@ -196,7 +191,7 @@
       {% endblock %}
     </div>
     {% block scripts %}
-      <script src="{{ 'assets/javascripts/application.0202355c.js' | url }}"></script>
+      <script src="{{ 'assets/javascripts/app.js' | url }}"></script>
       {% if lang.t("search.language") != "en" %}
         {% set languages = lang.t("search.language").split(",") %}
         {% if languages | length and languages[0] != "" %}
@@ -206,6 +201,9 @@
             {% if language != "en" %}
               {% if language == "ja" %}
                 <script src="{{ (path ~ 'tinyseg.js') | url }}"></script>
+              {% endif %}
+              {% if language in ("da","de","du","es","fi","fr","hu","it","ja","jp","nl","no","pt","ro","ru","sv","tr") %}
+                <script src="{{ (path ~ 'lunr.' ~ language ~ '.js') | url }}"></script>
               {% endif %}
             {% endif %}
           {% endfor %}
