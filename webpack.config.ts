@@ -24,6 +24,12 @@ import * as path from "path"
 import { Configuration } from "webpack"
 
 /* ----------------------------------------------------------------------------
+ * Plugins
+ * ------------------------------------------------------------------------- */
+
+import CopyPlugin = require("copy-webpack-plugin")
+
+/* ----------------------------------------------------------------------------
  * Configuration
  * ------------------------------------------------------------------------- */
 
@@ -75,6 +81,20 @@ export default (_env: never, args: Configuration) => {
       libraryTarget: "window"
     },
 
+     /* Plugins */
+    plugins: [
+
+      /* Copy and transform static assets */
+      new CopyPlugin([
+
+        /* Copy custom javascripts files */
+        {
+          context: "src",
+          from: "assets/javascripts/dark-mode.js",
+          to: "."
+        }
+      ])
+    ],
     /* Module resolver */
     resolve: {
       modules: [

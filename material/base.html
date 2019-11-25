@@ -44,7 +44,7 @@
         <meta name="lang:{{ key }}" content="{{ lang.t(key) }}">
       {% endfor %}
       <link rel="shortcut icon" href="{{ config.theme.favicon | url }}">
-      <meta name="generator" content="mkdocs-{{ mkdocs_version }}, mkdocs-material-4.4.2">
+      <meta name="generator" content="mkdocs-{{ mkdocs_version }}, $md-name$-$md-version$">
     {% endblock %}
     {% block htmltitle %}
       {% if page and page.meta and page.meta.title %}
@@ -65,7 +65,7 @@
         {% set primary = map.primary(
           palette.primary | replace(" ", "-") | lower
         ) %}
-        <meta name="theme-color" content="{{ primary }}">
+        <meta name="theme-color" content="#20232A">
       {% endif %}
     {% endblock %}
     {% block libs %}{% endblock %}
@@ -76,6 +76,7 @@
               font.text | replace(' ', '+') + ':300,400,400i,700|' +
               font.code | replace(' ', '+')
             }}&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:300,400,400i,700&display=fallback">
         <style>body,input{font-family:"{{ font.text }}","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"{{ font.code }}","Courier New",Courier,monospace}</style>
       {% endif %}
     {% endblock %}
@@ -103,6 +104,7 @@
   {% else %}
     <body dir="{{ lang.t('direction') }}">
   {% endif %}
+    <script src="{{ 'assets/javascripts/dark-mode.js' | url }}"></script>
     <svg class="md-svg">
       <defs>
         {% set platform = config.extra.repo_icon or config.repo_url %}
@@ -204,9 +206,6 @@
             {% if language != "en" %}
               {% if language == "ja" %}
                 <script src="{{ (path ~ 'tinyseg.js') | url }}"></script>
-              {% endif %}
-              {% if language in ("da","de","du","es","fi","fr","hu","it","ja","jp","nl","no","pt","ro","ru","sv","tr") %}
-                <script src="{{ (path ~ 'lunr.' ~ language ~ '.js') | url }}"></script>
               {% endif %}
             {% endif %}
           {% endfor %}

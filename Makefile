@@ -75,6 +75,13 @@ FONTS_SPECIMEN = $(subst src,material,$(wildcard src/assets/fonts/specimen/*))
 material/assets/fonts/specimen: ${FONTS_SPECIMEN}
 material/assets/fonts/specimen/%: src/assets/fonts/specimen/% | $$(@D)/.
 	@ echo "+ $@"
+	@ cp -r $< $@
+
+# Web font specimen
+FONTS_SPECIMEN2 = $(subst src,material,$(wildcard src/assets/webfonts/*))
+material/assets/webfonts: ${FONTS_SPECIMEN2}
+material/assets/webfonts/%: src/assets/webfonts/% | $$(@D)/.
+	@ echo "+ $@"
 	@ cp $< $@
 
 # Web fonts
@@ -98,7 +105,7 @@ IMAGES = $(subst src,material,$(wildcard src/assets/images/*.png))
 material/assets/images: $$@/icons ${IMAGES}
 material/assets/images/%.png: src/assets/images/%.png | $$(@D)/.
 	@ echo "+ $@"
-	@ cp $< $@
+	@ cp -r $< $@
 
 # -----------------------------------------------------------------------------
 
@@ -152,7 +159,7 @@ material/%.css: src/%.scss ${STYLESHEETS_PARTIALS} | $$(@D)/.
 # -----------------------------------------------------------------------------
 
 # Assets
-material/assets: $$@/fonts $$@/images $$@/javascripts $$@/stylesheets
+material/assets: $$@/fonts $$@/webfonts $$@/images $$@/javascripts $$@/stylesheets
 
 # -----------------------------------------------------------------------------
 
@@ -184,9 +191,8 @@ material/%.yml: src/%.yml
 NAME = $(shell jq -r '.name' package.json)
 VERSION = $(shell jq -r '.version' package.json)
 material: $$@/assets $$@/__init__.py $$@/mkdocs_theme.yml ${HTML}
-	@ sed -i "" 's/\$$md-name\$$/${NAME}/' $@/base.html
-	@ sed -i "" 's/\$$md-version\$$/${VERSION}/' $@/base.html
-	@ sed -i "" 's/\$$md-lunr-languages\$$/${LUNR_LANGUAGES}/' $@/base.html
+	# @ sed -i "" 's\/\$$md-name\$$\/${NAME}\/' $@\/base.html
+	# @ sed -i "" 's/\$$md-version\$$/${VERSION}/' $@/base.html
 	@ echo "\n  ${NAME}-${VERSION}\n"
 
 # -----------------------------------------------------------------------------

@@ -144,6 +144,7 @@
               font.text | replace(' ', '+') + ':300,400,400i,700|' +
               font.code | replace(' ', '+')
             }}&display=fallback" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald:300,400,400i,700&display=fallback" />
         <style>
           body, input {
             font-family: "{{ font.text }}", "Helvetica Neue",
@@ -155,8 +156,6 @@
           }
         </style>
       {% endif %}
-      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
-      <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald:300,400,400i,700&display=fallback" />
     {% endblock %}
 
     <!-- Material icons as iconset -->
@@ -171,7 +170,13 @@
     <!-- FontAwesome for social links -->
     {% if config.extra.social %}
       <link rel="stylesheet" type="text/css"
-          href="{{ 'assets/fonts/font-awesome.css' | url }}" />
+          href="{{ 'assets/fonts/fontawesome.min.css' | url }}">
+      <link rel="stylesheet" type="text/css"
+          href="{{ 'assets/fonts/brands.min.css' | url }}">
+      <link rel="stylesheet" type="text/css"
+          href="{{ 'assets/fonts/regular.min.css' | url }}">
+      <link rel="stylesheet" type="text/css"
+          href="{{ 'assets/fonts/solid.min.css' | url }}">
     {% endif %}
 
     <!-- Custom stylesheets -->
@@ -200,7 +205,7 @@
   {% else %}
     <body dir="{{ lang.t('direction') }}">
   {% endif %}
-    <script src="{{ 'assets/javascripts/manticore.js' | url }}"></script>
+    <script src="{{ 'assets/javascripts/dark-mode.js' | url }}"></script>
 
     <!-- Hidden container for inline SVGs -->
     <svg class="md-svg">
