@@ -82,7 +82,7 @@ FONTS_SPECIMEN2 = $(subst src,material,$(wildcard src/assets/webfonts/*))
 material/assets/webfonts: ${FONTS_SPECIMEN2}
 material/assets/webfonts/%: src/assets/webfonts/% | $$(@D)/.
 	@ echo "+ $@"
-	@ cp $< $@
+	@ cp -r $< $@
 
 # Web fonts
 FONTS = $(subst src,material,$(wildcard src/assets/fonts/*.css))

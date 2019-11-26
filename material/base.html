@@ -30,19 +30,6 @@
       {% elif config.site_author %}
         <meta name="author" content="{{ config.site_author }}">
       {% endif %}
-      {% for key in [
-        "clipboard.copy",
-        "clipboard.copied",
-        "search.language",
-        "search.pipeline.stopwords",
-        "search.pipeline.trimmer",
-        "search.result.none",
-        "search.result.one",
-        "search.result.other",
-        "search.tokenizer"
-      ] %}
-        <meta name="lang:{{ key }}" content="{{ lang.t(key) }}">
-      {% endfor %}
       <link rel="shortcut icon" href="{{ config.theme.favicon | url }}">
       <meta name="generator" content="mkdocs-{{ mkdocs_version }}, $md-name$-$md-version$">
     {% endblock %}
@@ -217,6 +204,23 @@
           {% endif %}
         {% endif %}
       {% endif %}
+      <script id="__lang" type="application/json">
+        {%- set translations = {} -%}
+        {%- for key in [
+          "clipboard.copy",
+          "clipboard.copied",
+          "search.language",
+          "search.pipeline.stopwords",
+          "search.pipeline.trimmer",
+          "search.result.none",
+          "search.result.one",
+          "search.result.other",
+          "search.tokenizer"
+        ] -%}
+          {%- set _ = translations.update({ key: lang.t(key) }) -%}
+        {%- endfor -%}
+        {{ translations | tojson }}
+      </script>
       <script>app({version:"{{ mkdocs_version }}",url:{base:"{{ base_url }}"}})</script>
       {% for path in config["extra_javascript"] %}
         <script src="{{ path | url }}"></script>
