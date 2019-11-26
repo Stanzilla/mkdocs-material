@@ -150,6 +150,7 @@ material/%.css: src/%.scss ${STYLESHEETS_PARTIALS} | $$(@D)/.
 		--include-path node_modules/modularscale-sass/stylesheets \
 		--include-path node_modules/material-design-color \
 		--include-path node_modules/material-shadows \
+		--include-path node_modules/simplebar/dist \
 		$< $@
 	@ ${BIN}/postcss $@ -m -u autoprefixer -u css-mqpacker -o $@
 	@ ${BIN}/csso $@ -o $(basename $@).min.css \

@@ -41,6 +41,8 @@ import {
   tap
 } from "rxjs/operators"
 
+import "simplebar"
+
 import "./polyfill"
 
 import {

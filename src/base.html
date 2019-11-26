@@ -195,9 +195,10 @@
       dir="{{ lang.t('direction') }}"
       data-md-color-primary="{{ primary }}"
       data-md-color-accent="{{ accent }}"
+      data-simplebar
     >
   {% else %}
-    <body dir="{{ lang.t('direction') }}">
+    <body dir="{{ lang.t('direction') }}" data-simplebar>
   {% endif %}
     <script src="{{ 'assets/javascripts/dark-mode.js' | url }}"></script>
 

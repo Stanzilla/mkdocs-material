@@ -90,9 +90,9 @@
   {% if palette.primary or palette.accent %}
     {% set primary = palette.primary | replace(" ", "-") | lower %}
     {% set accent  = palette.accent  | replace(" ", "-") | lower %}
-    <body dir="{{ lang.t('direction') }}" data-md-color-primary="{{ primary }}" data-md-color-accent="{{ accent }}">
+    <body dir="{{ lang.t('direction') }}" data-md-color-primary="{{ primary }}" data-md-color-accent="{{ accent }}" data-simplebar>
   {% else %}
-    <body dir="{{ lang.t('direction') }}">
+    <body dir="{{ lang.t('direction') }}" data-simplebar>
   {% endif %}
     <script src="{{ 'assets/javascripts/dark-mode.js' | url }}"></script>
     <svg class="md-svg">
