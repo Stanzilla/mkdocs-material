@@ -41,9 +41,11 @@ input {
 // Hack of the day to prevent jumping on scrollbar show/hide
 @media screen and (min-width: 960px) {
   html {
-      margin-left: calc(100vw - 100%);
-      margin-right: 0;
-      background-color: var(--color-background);
+    margin-right: calc(100% - 100vw);
+    background-color: var(--color-background);
+}
+  body {
+    margin-right: calc(100vw - 100%);
   }
 }
 
@@ -496,8 +498,11 @@ kbd {
       td:first-child {
         width: 250px;
       }
-    }
 
+      td.even-table:first-child  {
+        width: 100%;
+      }
+    }
 
     // Do not wrap links in tables
     a {
