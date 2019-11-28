@@ -23,7 +23,7 @@ sudo: false
 
 # Python, Node.js version and necessary services
 python: "3.6"
-node_js: "8"
+node_js: "10"
 services:
   - docker
 
@@ -44,7 +44,8 @@ install:
 
 # Perform build and release
 script:
-  - npm run lint
+  # - npm run lint
+  - npm run clean
   - npm run build
 
 # Deploy artifacts

@@ -20,55 +20,67 @@
  * IN THE SOFTWARE.
  */
 
-import { Observable, Subject, fromEvent } from "rxjs"
-import { filter, map, share } from "rxjs/operators"
-
-/* ----------------------------------------------------------------------------
- * Data
- * ------------------------------------------------------------------------- */
-
-/**
- * Observable for window hash change events
- */
-const hashchange$ = fromEvent<HashChangeEvent>(window, "hashchange")
-
-/**
- * Observable for window pop state events
- */
-const popstate$ = fromEvent<PopStateEvent>(window, "popstate")
+import {
+  EMPTY,
+  Observable,
+  OperatorFunction,
+  combineLatest,
+  of,
+  pipe
+} from "rxjs"
+import {
+  filter,
+  map,
+  switchMap,
+  takeUntil
+} from "rxjs/operators"
 
 /* ----------------------------------------------------------------------------
  * Functions
  * ------------------------------------------------------------------------- */
 
 /**
- * Watch location
+ * Invert boolean value of source observable
  *
- * @return Location subject
+ * @param toggle$ - Toggle observable
+ *
+ * @return Inverted toggle observable
  */
-export function watchLocation(): Subject<string> {
-  const location$ = new Subject<string>()
-  popstate$
+export function not(
+  toggle$: Observable<boolean>
+): Observable<boolean> {
+  return toggle$
     .pipe(
-      map(() => location.href),
-      share()
+      map(active => !active)
     )
-      .subscribe(location$)
-
-  /* Return subject */
-  return location$
 }
 
+/* ------------------------------------------------------------------------- */
+
 /**
- * Watch location fragment
+ * Toggle switch map with another observable
  *
- * @return Location fragment observable
+ * @template T - Source value type
+ * @template U - Target value type
+ *
+ * @param toggle$ - Toggle observable
+ * @param project - Projection
+ *
+ * @return Operator function
  */
-export function watchLocationFragment(): Observable<string> {
-  return hashchange$
-    .pipe(
-      map(() => location.hash),
-      filter(hash => hash.length > 0),
-      share()
+export function switchMapIf<T, U>(
+  toggle$: Observable<boolean>, project: (value: T) => Observable<U>
+): OperatorFunction<T, U> {
+  const begin$ = toggle$.pipe(filter(value =>  value))
+  const end$   = toggle$.pipe(filter(value => !value))
+  return pipe(
+    switchMap(value => combineLatest([of(value), begin$])),
+    switchMap(([value, active]) => active
+      ? project(value)
+          .pipe(
+            takeUntil(end$)
+          )
+      : EMPTY
     )
+  )
 }

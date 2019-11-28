@@ -96,7 +96,7 @@ material/assets/fonts/%.css: src/assets/fonts/%.css | $$(@D)/.
 # Icons
 IMAGES_ICONS = $(subst src,material,$(wildcard src/assets/images/icons/*.svg))
 material/assets/images/icons: ${IMAGES_ICONS}
-material/assets/images/icons/%: src/assets/images/icons/% | $$(@D)/.
+material/assets/images/icons/%.svg: src/assets/images/icons/%.svg | $$(@D)/.
 	@ echo "+ $@"
 	@ ${BIN}/svgo -q -i $< -o $@ --disable=removeViewBox
 
@@ -192,6 +192,11 @@ material/%.yml: src/%.yml
 NAME = $(shell jq -r '.name' package.json)
 VERSION = $(shell jq -r '.version' package.json)
 material: $$@/assets $$@/__init__.py $$@/mkdocs_theme.yml ${HTML}
+	@ sed -i.tmp \
+		-e 's/\$$md-name\$$/${NAME}/' \
+		-e 's/\$$md-version\$$/${VERSION}/' \
+		-e 's/\$$md-lunr-languages\$$/${LUNR_LANGUAGES}/' \
+		$@/base.html; rm -f $@/base.html.tmp
 	# @ sed -i "" 's\/\$$md-name\$$\/${NAME}\/' $@\/base.html
 	# @ sed -i "" 's/\$$md-version\$$/${VERSION}/' $@/base.html
 	@ echo "\n  ${NAME}-${VERSION}\n"

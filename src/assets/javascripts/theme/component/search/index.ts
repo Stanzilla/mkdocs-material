@@ -20,5 +20,5 @@
  * IN THE SOFTWARE.
  */
 
-export * from "./element"
-export * from "./operator"
+// export * from "./query"
+export * from "./reset"

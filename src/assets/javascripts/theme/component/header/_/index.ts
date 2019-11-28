@@ -20,5 +20,45 @@
  * IN THE SOFTWARE.
  */
 
-export * from "./element"
-export * from "./operator"
+import { Observable, defer, of } from "rxjs"
+
+/* ----------------------------------------------------------------------------
+ * Types
+ * ------------------------------------------------------------------------- */
+
+/**
+ * Header
+ */
+export interface Header {
+  sticky: boolean                      /* Header stickyness */
+  height: number                       /* Header visible height */
+}
+
+/* ----------------------------------------------------------------------------
+ * Functions
+ * ------------------------------------------------------------------------- */
+
+/**
+ * Watch header
+ *
+ * The header is wrapped in an observable to pave the way for auto-hiding or
+ * other dynamic behaviors that may be implemented later on.
+ *
+ * @param el - Header element
+ *
+ * @return Header observable
+ */
+export function watchHeader(
+  el: HTMLElement
+): Observable<Header> {
+  return defer(() => {
+    const sticky = getComputedStyle(el)
+      .getPropertyValue("position") === "fixed"
+
+      /* Return header as hot observable */
+    return of({
+      sticky,
+      height: sticky ? el.offsetHeight : 0
+    })
+  })
+}

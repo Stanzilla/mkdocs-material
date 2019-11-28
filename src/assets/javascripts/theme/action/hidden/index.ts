@@ -20,5 +20,29 @@
  * IN THE SOFTWARE.
  */
 
-export * from "./element"
-export * from "./operator"
+/* ----------------------------------------------------------------------------
+ * Functions
+ * ------------------------------------------------------------------------- */
+
+/**
+ * Set hidden
+ *
+ * @param el - Hideable element
+ * @param value - Whether the element is hidden
+ */
+export function setHidden(
+  el: HTMLElement, value: boolean
+): void {
+  el.setAttribute("data-md-state", value ? "hidden" : "")
+}
+
+/**
+ * Reset hidden
+ *
+ * @param el - Hideable element
+ */
+export function resetHidden(
+  el: HTMLElement
+): void {
+  el.removeAttribute("data-md-state")
+}

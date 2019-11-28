@@ -20,97 +20,88 @@
  * IN THE SOFTWARE.
  */
 
-import { Observable, fromEvent, merge } from "rxjs"
-import { map, shareReplay, startWith } from "rxjs/operators"
+import { Observable, fromEvent } from "rxjs"
+import { ajax } from "rxjs/ajax"
+import {
+  distinctUntilChanged,
+  map,
+  mapTo,
+  pluck,
+  shareReplay,
+  skip,
+  startWith,
+  switchMap
+} from "rxjs/operators"
+
+/* ----------------------------------------------------------------------------
+ * Function types
+ * ------------------------------------------------------------------------- */
+
+/**
+ * Switch options
+ */
+interface SwitchOptions {
+  location$: Observable<string>        /* Location observable */
+}
 
 /* ----------------------------------------------------------------------------
  * Data
  * ------------------------------------------------------------------------- */
 
 /**
- * Observable for window scroll events
+ * Observable for document load events
  */
-const scroll$ = fromEvent<UIEvent>(window, "scroll")
-
-/**
- * Observable for window resize events
- */
-const resize$ = fromEvent<UIEvent>(window, "resize")
-
-/* ----------------------------------------------------------------------------
- * Types
- * ------------------------------------------------------------------------- */
-
-/**
- * Viewport offset
- */
-export interface ViewportOffset {
-  x: number                            /* Horizontal offset */
-  y: number                            /* Vertical offset */
-}
-
-/**
- * Viewport size
- */
-export interface ViewportSize {
-  width: number                        /* Viewport width */
-  height: number                       /* Viewport height */
-}
+const load$ = fromEvent(document, "DOMContentLoaded")
 
 /* ----------------------------------------------------------------------------
  * Functions
  * ------------------------------------------------------------------------- */
 
 /**
- * Retrieve viewport offset
+ * Watch document
  *
- * @return Viewport offset
+ * @return Document observable
  */
-export function getViewportOffset(): ViewportOffset {
-  return {
-    x: pageXOffset,
-    y: pageYOffset
-  }
-}
-
-/**
- * Retrieve viewport size
- *
- * @return Viewport size
- */
-export function getViewportSize(): ViewportSize {
-  return {
-    width:  innerWidth,
-    height: innerHeight
-  }
-}
-
-/* ------------------------------------------------------------------------- */
-
-/**
- * Watch viewport offset
- *
- * @return Viewport offset observable
- */
-export function watchViewportOffset(): Observable<ViewportOffset> {
-  return merge(scroll$, resize$)
+export function watchDocument(): Observable<Document> {
+  return load$
     .pipe(
-      map(getViewportOffset),
-      startWith(getViewportOffset()),
+      mapTo(document),
       shareReplay(1)
     )
 }
 
 /**
- * Watch viewport size
+ * Watch document switch
  *
- * @return Viewport size observable
+ * This function returns an observables that fetches a document if the provided
+ * location observable emits a new value (i.e. URL). If the emitted URL points
+ * to the same page, the request is effectively ignored (e.g. when only the
+ * fragment identifier changes)
+ *
+ * @param options - Options
+ *
+ * @return Document switch observable
  */
-export function watchViewportSize(): Observable<ViewportSize> {
-  return resize$
+export function watchDocumentSwitch(
+  { location$ }: SwitchOptions
+): Observable<Document> {
+  return location$
     .pipe(
-      map(getViewportSize),
-      startWith(getViewportSize()),
+      startWith(location.href),
+      map(url => url.replace(/#[^#]+$/, "")),
+      distinctUntilChanged(),
+      skip(1),
+
+      /* Fetch document */
+      switchMap(url => ajax({
+        url,
+        responseType: "document",
+        withCredentials: true
+      })
+        .pipe<Document>(
+          pluck("response")
+        )
+      ),
       shareReplay(1)
     )
 }
