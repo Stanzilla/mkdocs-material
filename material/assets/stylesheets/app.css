@@ -569,6 +569,8 @@ kbd {
         border-top: 0; }
       .md-typeset table:not([class]) tr td:first-child {
         width: 250px; }
+      .md-typeset table:not([class]) tr td.even-table:first-child {
+        width: 100%; }
     .md-typeset table:not([class]) a {
       word-break: normal; }
   .md-typeset__scrollwrap {
@@ -777,7 +779,7 @@ hr {
     color: var(--color-text--lighter); }
 
 .md-header {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   left: 0;
@@ -2472,9 +2474,10 @@ hr {
 
 @media screen and (min-width: 960px) {
   html {
-    margin-left: calc(100vw - 100%);
-    margin-right: 0;
-    background-color: var(--color-background); } }
+    margin-right: calc(100% - 100vw);
+    background-color: var(--color-background); }
+  body {
+    margin-right: calc(100vw - 100%); } }
 
 @media print {
       .md-typeset a::after {
