@@ -1,80 +1,76 @@
 module.exports = {
-    env: {
-        browser: true,
-        node: true
+    "env": {
+        "browser": true,
+        "node": true
     },
-    extends: [
+    "extends": [
         "prettier",
         "prettier/@typescript-eslint"
     ],
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-        project: "tsconfig.json",
-        sourceType: "module"
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "tsconfig.json",
+        "sourceType": "module"
     },
-    plugins: [
+    "plugins": [
+        "eslint-plugin-jsdoc",
+        "eslint-plugin-import",
+        "eslint-plugin-no-null",
         "@typescript-eslint",
-        "@typescript-eslint/tslint",
-        "jsdoc",
-        "import",
-        "prettier",
-        "html",
-        "no-null"
+        "@typescript-eslint/tslint"
     ],
-    rules: {
+    "rules": {
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/array-type": [
             "error",
             {
-                default: "array"
+                "default": "array"
             }
         ],
         "@typescript-eslint/ban-types": [
             "error",
             {
-                types: {
-                    Object: {
-                        message: "Avoid using the `Object` type. Did you mean `object`?"
+                "types": {
+                    "Object": {
+                        "message": "Avoid using the `Object` type. Did you mean `object`?"
                     },
-                    Function: {
-                        message: "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
+                    "Function": {
+                        "message": "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
                     },
-                    Boolean: {
-                        message: "Avoid using the `Boolean` type. Did you mean `boolean`?"
+                    "Boolean": {
+                        "message": "Avoid using the `Boolean` type. Did you mean `boolean`?"
                     },
-                    Number: {
-                        message: "Avoid using the `Number` type. Did you mean `number`?"
+                    "Number": {
+                        "message": "Avoid using the `Number` type. Did you mean `number`?"
                     },
-                    String: {
-                        message: "Avoid using the `String` type. Did you mean `string`?"
+                    "String": {
+                        "message": "Avoid using the `String` type. Did you mean `string`?"
                     },
-                    Symbol: {
-                        message: "Avoid using the `Symbol` type. Did you mean `symbol`?"
+                    "Symbol": {
+                        "message": "Avoid using the `Symbol` type. Did you mean `symbol`?"
                     }
                 }
             }
         ],
         "@typescript-eslint/consistent-type-assertions": "error",
         "@typescript-eslint/consistent-type-definitions": "error",
-        "@typescript-eslint/dot-notation": ["error"],
+        "@typescript-eslint/dot-notation": "error",
         "@typescript-eslint/explicit-member-accessibility": [
             "error",
             {
-                accessibility: "explicit"
+                "accessibility": "explicit"
             }
         ],
         "@typescript-eslint/indent": [
             "off",
             2,
             {
-                ObjectExpression: "first",
-                SwitchCase: 2, // needs tweaking
-                ignoreComments: true,
-                FunctionDeclaration: {
-                    parameters: "first"
+                "ObjectExpression": "first",
+                "FunctionDeclaration": {
+                    "parameters": "first"
                 },
-                FunctionExpression: {
-                    parameters: "first"
+                "FunctionExpression": {
+                    "parameters": "first"
                 }
             }
         ],
@@ -82,17 +78,18 @@ module.exports = {
         "@typescript-eslint/member-delimiter-style": [
             "error",
             {
-                multiline: {
-                    delimiter: "none",
-                    requireLast: true
+                "multiline": {
+                    "delimiter": "none",
+                    "requireLast": true
                 },
-                singleline: {
-                    delimiter: "semi",
-                    requireLast: false
+                "singleline": {
+                    "delimiter": "semi",
+                    "requireLast": false
                 }
             }
         ],
         "@typescript-eslint/member-ordering": "error",
+        "@typescript-eslint/naming-convention": "error",
         "@typescript-eslint/no-empty-function": "error",
         "@typescript-eslint/no-empty-interface": "error",
         "@typescript-eslint/no-explicit-any": "off",
@@ -110,8 +107,7 @@ module.exports = {
             "error",
             "double",
             {
-                avoidEscape: true,
-                allowTemplateLiterals: true
+                "avoidEscape": true
             }
         ],
         "@typescript-eslint/semi": [
@@ -121,15 +117,15 @@ module.exports = {
         "@typescript-eslint/triple-slash-reference": [
             "off",
             {
-                path: "always",
-                types: "prefer-import",
-                lib: "always"
+                "path": "always",
+                "types": "prefer-import",
+                "lib": "always"
             }
         ],
         "@typescript-eslint/tslint/config": [
             "error",
             {
-                rules: {
+                "rules": {
                     "arguments-order": true,
                     "ban": true,
                     "bool-param-default": true,
@@ -212,9 +208,9 @@ module.exports = {
         "comma-dangle": [
             "error",
             {
-                objects: "never",
-                arrays: "never",
-                functions: "never"
+                "objects": "never",
+                "arrays": "never",
+                "functions": "never"
             }
         ],
         "complexity": "off",
@@ -232,7 +228,7 @@ module.exports = {
         "import/no-internal-modules": "off",
         "import/order": "error",
         "jsdoc/check-alignment": "error",
-        "jsdoc/check-indentation": "off",
+        "jsdoc/check-indentation": "error",
         "jsdoc/newline-after-description": "error",
         "max-classes-per-file": [
             "error",
@@ -241,7 +237,7 @@ module.exports = {
         "max-len": [
             "error",
             {
-                code: 120
+                "code": 120
             }
         ],
         "new-parens": "error",
@@ -267,7 +263,7 @@ module.exports = {
         "no-shadow": [
             "error",
             {
-                hoist: "all"
+                "hoist": "all"
             }
         ],
         "no-sparse-arrays": "error",
@@ -296,9 +292,9 @@ module.exports = {
         "space-before-function-paren": [
             "error",
             {
-                anonymous: "never",
-                asyncArrow: "always",
-                named: "never"
+                "anonymous": "never",
+                "asyncArrow": "always",
+                "named": "never"
             }
         ],
         "space-in-parens": [
@@ -309,7 +305,7 @@ module.exports = {
             "error",
             "always",
             {
-                markers: [
+                "markers": [
                     "/"
                 ]
             }
@@ -317,4 +313,4 @@ module.exports = {
         "use-isnan": "error",
         "valid-typeof": "off"
     }
-}
+};

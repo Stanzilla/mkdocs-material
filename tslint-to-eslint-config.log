@@ -1,10 +1,8 @@
-9 ESLint rules behave differently from their TSLint counterparts:
+8 ESLint rules behave differently from their TSLint counterparts:
   * @typescript-eslint/no-unused-expressions:
     - The TSLint optional config "allow-new" is the default ESLint behavior and will no longer be ignored.
   * brace-style:
     - ESLint's brace-style will check all tokens.
-  * camelcase:
-    - Leading and trailing underscores (_) in variable names will now be ignored.
   * comma-dangle:
     - ESLint does not support config property typeLiterals
   * eqeqeq:
